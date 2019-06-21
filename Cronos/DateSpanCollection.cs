@@ -48,14 +48,21 @@ namespace Cronos
         public DateSpanCollection Inverse()
         {
             var list = new List<DateSpan>();
-            int next = 1;
-            foreach (var idx in _content)
+            if (_content.Count > 0)
             {
-                if (_content.Count > next)
+                if (_content[0].Start != DateTime.MinValue)
+                    list.Add(new DateSpan(DateTime.MinValue, _content[0].Start));
+                int next = 1;
+                foreach (var idx in _content)
                 {
-                    list.Add(new DateSpan(idx.End, _content[next].Start));
-                    next += 1;
+                    if (_content.Count > next)
+                    {
+                        list.Add(new DateSpan(idx.End, _content[next].Start));
+                        next += 1;
+                    }
                 }
+                if (_content.Last().End != DateTime.MaxValue)
+                    list.Add(new DateSpan(_content.Last().End, DateTime.MaxValue));
             }
             return new DateSpanCollection(list);
         }

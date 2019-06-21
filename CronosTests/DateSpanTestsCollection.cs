@@ -238,16 +238,22 @@ namespace CronosTests
         }
 
         [Fact]
-        public void Inverse_01()
+        public void Inverse_02()
         {
             var now = DateTime.Now;
             var c = new DateSpanCollection(
                 new DateSpan(now.AddMinutes(12), now.AddMinutes(20)),
                 new DateSpan(now.AddMinutes(22), now.AddMinutes(30)));
             var result = c.Inverse();
-            Assert.Single(result);
-            Assert.Equal(now.AddMinutes(20), result.First().Start);
-            Assert.Equal(now.AddMinutes(22), result.First().End);
+            Assert.Equal(3, result.Count);
+            Assert.Equal(now.AddMinutes(20), result[1].Start);
+            Assert.Equal(now.AddMinutes(22), result[1].End);
+            var result2 = result.Inverse();
+            Assert.Equal(2, result2.Count);
+            Assert.Equal(now.AddMinutes(12), result2[0].Start);
+            Assert.Equal(now.AddMinutes(20), result2[0].End);
+            Assert.Equal(now.AddMinutes(22), result2[1].Start);
+            Assert.Equal(now.AddMinutes(30), result2[1].End);
         }
     }
 }
