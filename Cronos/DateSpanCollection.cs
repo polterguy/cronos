@@ -93,7 +93,7 @@ namespace Cronos
             // Sorting first to simplify logic further down
             Sort(list);
 
-            // Merging intersecting items
+            // Merging intersecting items using OR
             var result = new List<DateSpan>();
             int innerFrom = 0;
             var iterator = list.GetEnumerator();
@@ -118,7 +118,7 @@ namespace Cronos
             // Sorting first to simplify logic further down
             Sort(list);
 
-            // Merging intersecting items
+            // Merging intersecting items using AND
             var result = new List<DateSpan>();
             int innerFrom = 0;
             foreach (var idx in list)
