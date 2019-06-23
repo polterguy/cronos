@@ -59,6 +59,16 @@ namespace CronosTests
         }
 
         [Fact]
+        public void Sum_01()
+        {
+            var now = DateTime.Now;
+            var c1 = new DateSpanCollection(
+                new DateSpan(now.AddHours(1), now.AddHours(3)),
+                new DateSpan(now.AddHours(5), now.AddHours(7)));
+            Assert.Equal(new TimeSpan(4,0,0), c1.Size);
+        }
+
+        [Fact]
         public void Union_01()
         {
             var now = DateTime.Now;
