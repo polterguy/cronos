@@ -20,6 +20,13 @@ namespace CronosTests
         public void Constructor_Throws_01()
         {
             var now = DateTime.Now;
+            Assert.Throws<ArgumentOutOfRangeException>(() => new DateSpan(now, now));
+        }
+
+        [Fact]
+        public void Constructor_Throws_02()
+        {
+            var now = DateTime.Now;
             Assert.Throws<ArgumentOutOfRangeException>(() => new DateSpan(now, now.AddHours(-1)));
         }
 
@@ -74,6 +81,78 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now.AddHours(5), now.AddHours(7));
             Assert.False(sp1.Intersects(sp2));
+        }
+
+        [Fact]
+        public void Intersects_06()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(-5), now.AddHours(-1));
+            Assert.False(sp1.Intersects(sp2));
+        }
+
+        [Fact]
+        public void Intersects_07()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now, now.AddHours(3));
+            Assert.True(sp1.Intersects(sp2));
+        }
+
+        [Fact]
+        public void Adjacent_01()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(3), now.AddHours(5));
+            Assert.True(sp1.Adjacent(sp2));
+        }
+
+        [Fact]
+        public void Adjacent_02()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(-3), now);
+            Assert.True(sp1.Adjacent(sp2));
+        }
+
+        [Fact]
+        public void Adjacent_03()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now, now.AddHours(3));
+            Assert.False(sp1.Adjacent(sp2));
+        }
+
+        [Fact]
+        public void Adjacent_04()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(4), now.AddHours(7));
+            Assert.False(sp1.Adjacent(sp2));
+        }
+
+        [Fact]
+        public void Adjacent_05()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(2), now.AddHours(5));
+            Assert.False(sp1.Adjacent(sp2));
+        }
+
+        [Fact]
+        public void Adjacent_06()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(-5), now.AddHours(-1));
+            Assert.False(sp1.Adjacent(sp2));
         }
 
         [Fact]
@@ -141,6 +220,15 @@ namespace CronosTests
         }
 
         [Fact]
+        public void Union_Throws_02()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(-5), now.AddHours(-1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => sp1.Union(sp2));
+        }
+
+        [Fact]
         public void Intersection_01()
         {
             var now = DateTime.Now;
@@ -181,21 +269,93 @@ namespace CronosTests
         }
 
         [Fact]
-        public void Adjacent_01()
+        public void Operator_eq_01()
         {
             var now = DateTime.Now;
-            var sp1 = new DateSpan(now, now.AddHours(3));
-            var sp2 = new DateSpan(now.AddHours(3), now.AddHours(5));
-            Assert.True(sp1.Adjacent(sp2));
+            var sp1 = new DateSpan(now, now.AddHours(5));
+            var sp2 = new DateSpan(now, now.AddHours(5));
+            Assert.True(sp1 == sp2);
         }
 
         [Fact]
-        public void Adjacent_02()
+        public void Operator_eq_02()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(5));
+            var sp2 = new DateSpan(now, now.AddHours(3));
+            Assert.False(sp1 == sp2);
+        }
+
+        [Fact]
+        public void Operator_eq_03()
         {
             var now = DateTime.Now;
             var sp1 = new DateSpan(now, now.AddHours(3));
-            var sp2 = new DateSpan(now.AddHours(-3), now);
-            Assert.True(sp1.Adjacent(sp2));
+            var sp2 = new DateSpan(now, now.AddHours(5));
+            Assert.False(sp1 == sp2);
+        }
+
+        [Fact]
+        public void Operator_eq_04()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now.AddHours(1), now.AddHours(5));
+            var sp2 = new DateSpan(now.AddHours(2), now.AddHours(5));
+            Assert.False(sp1 == sp2);
+        }
+
+        [Fact]
+        public void Operator_eq_05()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now.AddHours(2), now.AddHours(5));
+            var sp2 = new DateSpan(now.AddHours(1), now.AddHours(5));
+            Assert.False(sp1 == sp2);
+        }
+
+        [Fact]
+        public void Operator_neq_01()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(5));
+            var sp2 = new DateSpan(now, now.AddHours(5));
+            Assert.False(sp1 != sp2);
+        }
+
+        [Fact]
+        public void Operator_neq_02()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(5));
+            var sp2 = new DateSpan(now, now.AddHours(3));
+            Assert.True(sp1 != sp2);
+        }
+
+        [Fact]
+        public void Operator_neq_03()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now, now.AddHours(5));
+            Assert.True(sp1 != sp2);
+        }
+
+        [Fact]
+        public void Operator_neq_04()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now.AddHours(1), now.AddHours(5));
+            var sp2 = new DateSpan(now.AddHours(2), now.AddHours(5));
+            Assert.True(sp1 != sp2);
+        }
+
+        [Fact]
+        public void Operator_neq_05()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now.AddHours(2), now.AddHours(5));
+            var sp2 = new DateSpan(now.AddHours(1), now.AddHours(5));
+            Assert.True(sp1 != sp2);
         }
 
         [Fact]
@@ -289,93 +449,77 @@ namespace CronosTests
         }
 
         [Fact]
-        public void Operator_eq_01()
+        public void Operator_lt_eq_01()
         {
             var now = DateTime.Now;
-            var sp1 = new DateSpan(now, now.AddHours(5));
-            var sp2 = new DateSpan(now, now.AddHours(5));
-            Assert.True(sp1 == sp2);
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(5), now.AddHours(7));
+            Assert.True(sp1 <= sp2);
+            Assert.False(sp2 <= sp1);
         }
 
         [Fact]
-        public void Operator_eq_02()
+        public void Operator_lt_eq_02()
         {
             var now = DateTime.Now;
-            var sp1 = new DateSpan(now, now.AddHours(5));
+            var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(3));
-            Assert.False(sp1 == sp2);
+            Assert.True(sp1 <= sp2);
         }
 
         [Fact]
-        public void Operator_eq_03()
+        public void Operator_lt_eq_03()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now, now.AddHours(2));
+            Assert.False(sp1 <= sp2);
+        }
+
+        [Fact]
+        public void Operator_lt_eq_04()
         {
             var now = DateTime.Now;
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(5));
-            Assert.False(sp1 == sp2);
+            Assert.True(sp1 <= sp2);
         }
 
         [Fact]
-        public void Operator_eq_04()
+        public void Operator_mt_eq_01()
         {
             var now = DateTime.Now;
-            var sp1 = new DateSpan(now.AddHours(1), now.AddHours(5));
-            var sp2 = new DateSpan(now.AddHours(2), now.AddHours(5));
-            Assert.False(sp1 == sp2);
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now.AddHours(5), now.AddHours(7));
+            Assert.False(sp1 >= sp2);
+            Assert.True(sp2 >= sp1);
         }
 
         [Fact]
-        public void Operator_eq_05()
+        public void Operator_mt_eq_02()
         {
             var now = DateTime.Now;
-            var sp1 = new DateSpan(now.AddHours(2), now.AddHours(5));
-            var sp2 = new DateSpan(now.AddHours(1), now.AddHours(5));
-            Assert.False(sp1 == sp2);
-        }
-
-        [Fact]
-        public void Operator_neq_01()
-        {
-            var now = DateTime.Now;
-            var sp1 = new DateSpan(now, now.AddHours(5));
-            var sp2 = new DateSpan(now, now.AddHours(5));
-            Assert.False(sp1 != sp2);
-        }
-
-        [Fact]
-        public void Operator_neq_02()
-        {
-            var now = DateTime.Now;
-            var sp1 = new DateSpan(now, now.AddHours(5));
+            var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(3));
-            Assert.True(sp1 != sp2);
+            Assert.True(sp1 >= sp2);
         }
 
         [Fact]
-        public void Operator_neq_03()
+        public void Operator_mt_eq_03()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now, now.AddHours(3));
+            var sp2 = new DateSpan(now, now.AddHours(2));
+            Assert.True(sp1 >= sp2);
+        }
+
+        [Fact]
+        public void Operator_Mt_eq_04()
         {
             var now = DateTime.Now;
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(5));
-            Assert.True(sp1 != sp2);
-        }
-
-        [Fact]
-        public void Operator_neq_04()
-        {
-            var now = DateTime.Now;
-            var sp1 = new DateSpan(now.AddHours(1), now.AddHours(5));
-            var sp2 = new DateSpan(now.AddHours(2), now.AddHours(5));
-            Assert.True(sp1 != sp2);
-        }
-
-        [Fact]
-        public void Operator_neq_05()
-        {
-            var now = DateTime.Now;
-            var sp1 = new DateSpan(now.AddHours(2), now.AddHours(5));
-            var sp2 = new DateSpan(now.AddHours(1), now.AddHours(5));
-            Assert.True(sp1 != sp2);
+            Assert.False(sp1 >= sp2);
         }
     }
 }

@@ -48,6 +48,16 @@ namespace Cronos
 
         #region [ -- Overloaded operators -- ]
 
+        public static bool operator == (DateSpan lhs, DateSpan rhs)
+        {
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator != (DateSpan lhs, DateSpan rhs)
+        {
+            return !lhs.Equals(rhs);
+        }
+
         public static bool operator < (DateSpan lhs, DateSpan rhs)
         {
             return lhs.CompareTo(rhs) == -1;
@@ -58,14 +68,14 @@ namespace Cronos
             return lhs.CompareTo(rhs) == 1;
         }
 
-        public static bool operator == (DateSpan lhs, DateSpan rhs)
+        public static bool operator <= (DateSpan lhs, DateSpan rhs)
         {
-            return lhs.Equals(rhs);
+            return lhs.CompareTo(rhs) != 1;
         }
 
-        public static bool operator != (DateSpan lhs, DateSpan rhs)
+        public static bool operator >= (DateSpan lhs, DateSpan rhs)
         {
-            return !lhs.Equals(rhs);
+            return lhs.CompareTo(rhs) != -1;
         }
 
         #endregion
