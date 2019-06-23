@@ -533,5 +533,23 @@ namespace CronosTests
             Assert.False(sp1 >= sp2);
             Assert.True(sp2 >= sp1);
         }
+
+        [Fact]
+        public void Operator_OR_01()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now.AddHours(1), now.AddHours(3));
+            var sp2 = new DateSpan(now, now.AddHours(5));
+            Assert.Equal(sp1.Union(sp2), sp1 | sp2);
+        }
+
+        [Fact]
+        public void Operator_AND_01()
+        {
+            var now = DateTime.Now;
+            var sp1 = new DateSpan(now.AddHours(1), now.AddHours(3));
+            var sp2 = new DateSpan(now, now.AddHours(5));
+            Assert.Equal(sp1.Intersection(sp2), sp1 & sp2);
+        }
     }
 }

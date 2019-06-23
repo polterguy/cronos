@@ -20,6 +20,8 @@ namespace Cronos
 
         public TimeSpan Size { get { return End - Start; } }
 
+        #region [ -- Algebraic helper methods -- ]
+
         public bool Intersects(DateSpan rhs)
         {
             return rhs.Start < End && rhs.End > Start;
@@ -45,6 +47,8 @@ namespace Cronos
 
             return new DateSpan(Start < rhs.Start ? rhs.Start : Start, End > rhs.End ? rhs.End : End);
         }
+
+        #endregion
 
         #region [ -- Overloaded operators -- ]
 
@@ -76,6 +80,16 @@ namespace Cronos
         public static bool operator >= (DateSpan lhs, DateSpan rhs)
         {
             return lhs.CompareTo(rhs) != -1;
+        }
+
+        public static DateSpan operator | (DateSpan lhs, DateSpan rhs)
+        {
+            return lhs.Union(rhs);
+        }
+
+        public static DateSpan operator & (DateSpan lhs, DateSpan rhs)
+        {
+            return lhs.Intersection(rhs);
         }
 
         #endregion
