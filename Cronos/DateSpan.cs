@@ -3,7 +3,7 @@ using System;
 
 namespace Cronos
 {
-    public class DateSpan : IComparable
+    public class DateSpan : IComparable<DateSpan>
     {
         public DateSpan(DateTime start, DateTime end)
         {
@@ -44,6 +44,8 @@ namespace Cronos
             return new DateSpan(Start < rhs.Start ? rhs.Start : Start, End > rhs.End ? rhs.End : End);
         }
 
+        #region [ -- Overloaded operators -- ]
+
         public static bool operator < (DateSpan lhs, DateSpan rhs)
         {
             return lhs.CompareTo(rhs) == -1;
@@ -54,17 +56,45 @@ namespace Cronos
             return lhs.CompareTo(rhs) == 1;
         }
 
+        public static bool operator == (DateSpan lhs, DateSpan rhs)
+        {
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator != (DateSpan lhs, DateSpan rhs)
+        {
+            return !lhs.Equals(rhs);
+        }
+
+        #endregion
+
         #region [ -- Interface implementations -- ]
 
-        public int CompareTo(object obj)
+        public int CompareTo(DateSpan other)
         {
-            if (!(obj is DateSpan rhs))
-                throw new ArgumentException($"Cannot compare a DateSpan to '{obj}'");
-
-            var result = Start.CompareTo(rhs.Start);
+            var result = Start.CompareTo(other.Start);
             if (result == 0)
-                result = End.CompareTo(rhs.End);
+                result = End.CompareTo(other.End);
             return result;
+        }
+
+        #endregion
+
+        #region [ -- Overrides -- ]
+
+        public override string ToString()
+        {
+            return Start.ToString() + " - " + End.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DateSpan other && CompareTo(other) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return Start.GetHashCode() * 17 + End.GetHashCode();
         }
 
         #endregion
