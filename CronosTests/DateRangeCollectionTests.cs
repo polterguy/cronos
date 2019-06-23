@@ -6,15 +6,15 @@ using Cronos;
 
 namespace CronosTests
 {
-    public class DateSpanTestsCollection
+    public class DateRangeCollectionTests
     {
         [Fact]
         public void Constructor_01()
         {
             var now = DateTime.Now;
-            var c = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(2)),
-                new DateSpan(now.AddHours(3), now.AddHours(4)));
+            var c = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(2)),
+                new DateRange(now.AddHours(3), now.AddHours(4)));
             Assert.Equal(2, c.Count);
             Assert.Equal(now.AddHours(1), c.First().Start);
             Assert.Equal(now.AddHours(2), c.First().End);
@@ -26,9 +26,9 @@ namespace CronosTests
         public void Constructor_02()
         {
             var now = DateTime.Now;
-            var c = new DateSpanCollection(
-                new DateSpan(now.AddHours(3), now.AddHours(5)),
-                new DateSpan(now.AddHours(4), now.AddHours(7)));
+            var c = new DateRangeCollection(
+                new DateRange(now.AddHours(3), now.AddHours(5)),
+                new DateRange(now.AddHours(4), now.AddHours(7)));
             Assert.Single(c);
             Assert.Equal(now.AddHours(3), c.First().Start);
             Assert.Equal(now.AddHours(7), c.First().End);
@@ -38,11 +38,11 @@ namespace CronosTests
         public void Constructor_03()
         {
             var now = DateTime.Now;
-            var c = new DateSpanCollection(
-                new DateSpan(now.AddHours(3), now.AddHours(5)),
-                new DateSpan(now.AddHours(4), now.AddHours(7)),
-                new DateSpan(now.AddHours(10), now.AddHours(12)),
-                new DateSpan(now.AddHours(11), now.AddHours(14)));
+            var c = new DateRangeCollection(
+                new DateRange(now.AddHours(3), now.AddHours(5)),
+                new DateRange(now.AddHours(4), now.AddHours(7)),
+                new DateRange(now.AddHours(10), now.AddHours(12)),
+                new DateRange(now.AddHours(11), now.AddHours(14)));
             Assert.Equal(2, c.Count);
             Assert.Equal(now.AddHours(3), c.First().Start);
             Assert.Equal(now.AddHours(7), c.First().End);
@@ -54,7 +54,7 @@ namespace CronosTests
         public void Constructor_04()
         {
             var now = DateTime.Now;
-            var c = new DateSpanCollection(new DateSpan(now.AddHours(3), now.AddHours(5)));
+            var c = new DateRangeCollection(new DateRange(now.AddHours(3), now.AddHours(5)));
             Assert.Single(c);
         }
 
@@ -62,9 +62,9 @@ namespace CronosTests
         public void Sum_01()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(3)),
-                new DateSpan(now.AddHours(5), now.AddHours(7)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(3)),
+                new DateRange(now.AddHours(5), now.AddHours(7)));
             Assert.Equal(new TimeSpan(4,0,0), c1.Size);
         }
 
@@ -72,12 +72,12 @@ namespace CronosTests
         public void Union_01()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(3)),
-                new DateSpan(now.AddHours(5), now.AddHours(7)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddHours(9), now.AddHours(11)),
-                new DateSpan(now.AddHours(13), now.AddHours(15)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(3)),
+                new DateRange(now.AddHours(5), now.AddHours(7)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddHours(9), now.AddHours(11)),
+                new DateRange(now.AddHours(13), now.AddHours(15)));
             var result = c1.Union(c2);
             Assert.Equal(4, result.Count);
             Assert.Equal(now.AddHours(1), result.First().Start);
@@ -94,12 +94,12 @@ namespace CronosTests
         public void Union_02()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(6)),
-                new DateSpan(now.AddHours(5), now.AddHours(7)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddHours(9), now.AddHours(11)),
-                new DateSpan(now.AddHours(13), now.AddHours(15)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(6)),
+                new DateRange(now.AddHours(5), now.AddHours(7)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddHours(9), now.AddHours(11)),
+                new DateRange(now.AddHours(13), now.AddHours(15)));
             var result = c1.Union(c2);
             Assert.Equal(3, result.Count);
             Assert.Equal(now.AddHours(1), result.First().Start);
@@ -114,12 +114,12 @@ namespace CronosTests
         public void Union_03()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(3)),
-                new DateSpan(now.AddHours(5), now.AddHours(7)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddHours(6), now.AddHours(11)),
-                new DateSpan(now.AddHours(13), now.AddHours(15)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(3)),
+                new DateRange(now.AddHours(5), now.AddHours(7)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddHours(6), now.AddHours(11)),
+                new DateRange(now.AddHours(13), now.AddHours(15)));
             var result = c1.Union(c2);
             Assert.Equal(3, result.Count);
             Assert.Equal(now.AddHours(1), result.First().Start);
@@ -134,12 +134,12 @@ namespace CronosTests
         public void Union_04()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(40)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddHours(2), now.AddHours(4)),
-                new DateSpan(now.AddHours(5), now.AddHours(6)),
-                new DateSpan(now.AddHours(8), now.AddHours(10)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(40)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddHours(2), now.AddHours(4)),
+                new DateRange(now.AddHours(5), now.AddHours(6)),
+                new DateRange(now.AddHours(8), now.AddHours(10)));
             var result = c1.Union(c2);
             Assert.Single(result);
             Assert.Equal(now.AddHours(1), result.First().Start);
@@ -150,12 +150,12 @@ namespace CronosTests
         public void Intersection_01()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(3)),
-                new DateSpan(now.AddHours(5), now.AddHours(7)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddHours(6), now.AddHours(11)),
-                new DateSpan(now.AddHours(13), now.AddHours(15)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(3)),
+                new DateRange(now.AddHours(5), now.AddHours(7)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddHours(6), now.AddHours(11)),
+                new DateRange(now.AddHours(13), now.AddHours(15)));
             var result = c1.Intersection(c2);
             Assert.Single(result);
             Assert.Equal(now.AddHours(6), result.First().Start);
@@ -166,12 +166,12 @@ namespace CronosTests
         public void Intersection_02()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddHours(1), now.AddHours(4)),
-                new DateSpan(now.AddHours(5), now.AddHours(8)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddHours(2), now.AddHours(3)),
-                new DateSpan(now.AddHours(6), now.AddHours(7)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddHours(1), now.AddHours(4)),
+                new DateRange(now.AddHours(5), now.AddHours(8)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddHours(2), now.AddHours(3)),
+                new DateRange(now.AddHours(6), now.AddHours(7)));
             var result = c1.Intersection(c2);
             Assert.Equal(2, result.Count);
             Assert.Equal(now.AddHours(2), result[0].Start);
@@ -184,11 +184,11 @@ namespace CronosTests
         public void Intersection_03()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(1), now.AddMinutes(10)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(2), now.AddMinutes(3)),
-                new DateSpan(now.AddMinutes(6), now.AddMinutes(7)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(1), now.AddMinutes(10)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(2), now.AddMinutes(3)),
+                new DateRange(now.AddMinutes(6), now.AddMinutes(7)));
             var result = c1.Intersection(c2);
             Assert.Equal(2, result.Count);
             Assert.Equal(now.AddMinutes(2), result[0].Start);
@@ -201,12 +201,12 @@ namespace CronosTests
         public void Intersection_04()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(1), now.AddMinutes(10)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(2), now.AddMinutes(3)),
-                new DateSpan(now.AddMinutes(4), now.AddMinutes(5)),
-                new DateSpan(now.AddMinutes(6), now.AddMinutes(7)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(1), now.AddMinutes(10)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(2), now.AddMinutes(3)),
+                new DateRange(now.AddMinutes(4), now.AddMinutes(5)),
+                new DateRange(now.AddMinutes(6), now.AddMinutes(7)));
             var result = c1.Intersection(c2);
             Assert.Equal(3, result.Count);
             Assert.Equal(now.AddMinutes(2), result[0].Start);
@@ -221,11 +221,11 @@ namespace CronosTests
         public void Intersection_05()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(5), now.AddMinutes(50)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(2), now.AddMinutes(10)),
-                new DateSpan(now.AddMinutes(12), now.AddMinutes(20)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(5), now.AddMinutes(50)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(2), now.AddMinutes(10)),
+                new DateRange(now.AddMinutes(12), now.AddMinutes(20)));
             var result = c1.Intersection(c2);
             Assert.Equal(2, result.Count);
             Assert.Equal(now.AddMinutes(5), result[0].Start);
@@ -238,11 +238,11 @@ namespace CronosTests
         public void Intersection_06()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(5), now.AddMinutes(10)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(12), now.AddMinutes(20)),
-                new DateSpan(now.AddMinutes(22), now.AddMinutes(30)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(5), now.AddMinutes(10)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(12), now.AddMinutes(20)),
+                new DateRange(now.AddMinutes(22), now.AddMinutes(30)));
             var result = c1.Intersection(c2);
             Assert.Empty(result);
         }
@@ -251,12 +251,12 @@ namespace CronosTests
         public void Intersection_07()
         {
             var now = DateTime.Now;
-            var c1 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(1), now.AddMinutes(10)));
-            var c2 = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(2), now.AddMinutes(3)),
-                new DateSpan(now.AddMinutes(4), now.AddMinutes(5)),
-                new DateSpan(now.AddMinutes(6), now.AddMinutes(7)));
+            var c1 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(1), now.AddMinutes(10)));
+            var c2 = new DateRangeCollection(
+                new DateRange(now.AddMinutes(2), now.AddMinutes(3)),
+                new DateRange(now.AddMinutes(4), now.AddMinutes(5)),
+                new DateRange(now.AddMinutes(6), now.AddMinutes(7)));
             var result = c2.Intersection(c1);
             Assert.Equal(3, result.Count);
             Assert.Equal(now.AddMinutes(2), result[0].Start);
@@ -271,9 +271,9 @@ namespace CronosTests
         public void Inverse_02()
         {
             var now = DateTime.Now;
-            var c = new DateSpanCollection(
-                new DateSpan(now.AddMinutes(12), now.AddMinutes(20)),
-                new DateSpan(now.AddMinutes(22), now.AddMinutes(30)));
+            var c = new DateRangeCollection(
+                new DateRange(now.AddMinutes(12), now.AddMinutes(20)),
+                new DateRange(now.AddMinutes(22), now.AddMinutes(30)));
             var result = c.Inverse();
             Assert.Equal(3, result.Count);
             Assert.Equal(now.AddMinutes(20), result[1].Start);

@@ -3,9 +3,9 @@ using System;
 
 namespace Cronos
 {
-    public class DateSpan : IComparable<DateSpan>
+    public class DateRange : IComparable<DateRange>
     {
-        public DateSpan(DateTime start, DateTime end)
+        public DateRange(DateTime start, DateTime end)
         {
             if (end <= start)
                 throw new ArgumentOutOfRangeException($"{nameof(start)} must be less than {nameof(end)}");
@@ -22,72 +22,72 @@ namespace Cronos
 
         #region [ -- Algebraic helper methods -- ]
 
-        public bool Intersects(DateSpan rhs)
+        public bool Intersects(DateRange rhs)
         {
             return rhs.Start < End && rhs.End > Start;
         }
 
-        public bool Adjacent(DateSpan rhs)
+        public bool Adjacent(DateRange rhs)
         {
             return rhs.Start == End || rhs.End == Start;
         }
 
-        public DateSpan Union(DateSpan rhs)
+        public DateRange Union(DateRange rhs)
         {
             if (!Intersects(rhs) && !Adjacent(rhs))
                 throw new ArgumentOutOfRangeException($"{nameof(rhs)} must be adjacent or intersect with the current instance");
 
-            return new DateSpan(Start < rhs.Start ? Start : rhs.Start, End > rhs.End ? End : rhs.End);
+            return new DateRange(Start < rhs.Start ? Start : rhs.Start, End > rhs.End ? End : rhs.End);
         }
 
-        public DateSpan Intersection(DateSpan rhs)
+        public DateRange Intersection(DateRange rhs)
         {
             if (!Intersects(rhs))
                 throw new ArgumentOutOfRangeException($"{nameof(rhs)} must intersect with date");
 
-            return new DateSpan(Start < rhs.Start ? rhs.Start : Start, End > rhs.End ? rhs.End : End);
+            return new DateRange(Start < rhs.Start ? rhs.Start : Start, End > rhs.End ? rhs.End : End);
         }
 
         #endregion
 
         #region [ -- Overloaded operators -- ]
 
-        public static bool operator == (DateSpan lhs, DateSpan rhs)
+        public static bool operator == (DateRange lhs, DateRange rhs)
         {
             return lhs.Equals(rhs);
         }
 
-        public static bool operator != (DateSpan lhs, DateSpan rhs)
+        public static bool operator != (DateRange lhs, DateRange rhs)
         {
             return !lhs.Equals(rhs);
         }
 
-        public static bool operator < (DateSpan lhs, DateSpan rhs)
+        public static bool operator < (DateRange lhs, DateRange rhs)
         {
             return lhs.CompareTo(rhs) == -1;
         }
 
-        public static bool operator > (DateSpan lhs, DateSpan rhs)
+        public static bool operator > (DateRange lhs, DateRange rhs)
         {
             return lhs.CompareTo(rhs) == 1;
         }
 
-        public static bool operator <= (DateSpan lhs, DateSpan rhs)
+        public static bool operator <= (DateRange lhs, DateRange rhs)
         {
             return lhs.CompareTo(rhs) != 1;
         }
 
-        public static bool operator >= (DateSpan lhs, DateSpan rhs)
+        public static bool operator >= (DateRange lhs, DateRange rhs)
         {
             return lhs.CompareTo(rhs) != -1;
         }
 
-        public static DateSpan operator | (DateSpan lhs, DateSpan rhs)
+        public static DateRange operator | (DateRange lhs, DateRange rhs)
         {
             return lhs.Union(rhs);
         }
 
-        public static DateSpan operator & (DateSpan lhs, DateSpan rhs)
+        public static DateRange operator & (DateRange lhs, DateRange rhs)
         {
             return lhs.Intersection(rhs);
         }
@@ -96,7 +96,7 @@ namespace Cronos
 
         #region [ -- Interface implementations -- ]
 
-        public int CompareTo(DateSpan other)
+        public int CompareTo(DateRange other)
         {
             var result = Start.CompareTo(other.Start);
             if (result == 0)
@@ -115,7 +115,7 @@ namespace Cronos
 
         public override bool Equals(object obj)
         {
-            return obj is DateSpan other && CompareTo(other) == 0;
+            return obj is DateRange other && CompareTo(other) == 0;
         }
 
         public override int GetHashCode()

@@ -6,30 +6,32 @@ using System.Collections.Generic;
 
 namespace Cronos
 {
-    public class DateSpanCollection : IEnumerable<DateSpan>
+    public class DateRangeCollection : IEnumerable<DateRange>
     {
-        readonly List<DateSpan> _content;
+        readonly List<DateRange> _content;
 
-        public DateSpanCollection(IEnumerable<DateSpan> values)
+        public DateRangeCollection(IEnumerable<DateRange> values)
             : this (Normalize(values.ToList()))
         { }
 
-        public DateSpanCollection(params DateSpan[] values)
+        public DateRangeCollection(params DateRange[] values)
             : this (Normalize(values.ToList()))
         { }
 
-        DateSpanCollection(List<DateSpan> content)
+        DateRangeCollection(List<DateRange> content)
         {
             _content = content;
         }
 
-        public DateSpan this[int index] => _content[index];
+        public DateRange this[int index] => _content[index];
 
         public int Count => _content.Count;
 
         public TimeSpan Size => new TimeSpan(_content.Sum(x => (x.End - x.Start).Ticks));
 
-        public DateSpanCollection Union(DateSpanCollection rhs)
+        #region [ -- Algebraic helper methods -- ]
+
+        public DateRangeCollection Union(DateRangeCollection rhs)
         {
             /*
              * Simple case, since Normalize basically creates a union.
@@ -37,15 +39,15 @@ namespace Cronos
              * whatever logic the CTOR of the class contains, besides
              * from making sure we pass in both sides' content to the CTOR.
              */
-            var list = new List<DateSpan>(_content);
+            var list = new List<DateRange>(_content);
             list.AddRange(rhs);
-            return new DateSpanCollection(Normalize(list));
+            return new DateRangeCollection(Normalize(list));
         }
 
-        public DateSpanCollection Intersection(DateSpanCollection rhs)
+        public DateRangeCollection Intersection(DateRangeCollection rhs)
         {
             // Buffer used to hold our result.
-            var list = new List<DateSpan>();
+            var list = new List<DateRange>();
 
             /*
              * The iterator for the this instance, which is used to enumerate
@@ -112,44 +114,65 @@ namespace Cronos
              * Our end result, passed into our private CTOR, which assumes
              * the items are already normalized.
              */
-            return new DateSpanCollection(list);
+            return new DateRangeCollection(list);
         }
 
-        public DateSpanCollection Inverse(bool edgeValues = true)
+        public DateRangeCollection Inverse(bool edgeValues = true)
         {
             // Buffer to hold our result.
-            var list = new List<DateSpan>();
+            var list = new List<DateRange>();
 
             // Making sure we actually have anything to inverse here.
             if (_content.Count > 0)
             {
                 // Adding "start edge value" if we should
                 if (edgeValues && _content[0].Start != DateTime.MinValue)
-                    list.Add(new DateSpan(DateTime.MinValue, _content[0].Start));
+                    list.Add(new DateRange(DateTime.MinValue, _content[0].Start));
 
                 // Used to figure out the next item in our list.
                 int next = 0;
                 foreach (var idx in _content)
                 {
                     if (_content.Count > ++next)
-                        list.Add(new DateSpan(idx.End, _content[next].Start));
+                        list.Add(new DateRange(idx.End, _content[next].Start));
                 }
 
                 // Adding "end edge value" if we should
                 if (_content[_content.Count - 1].End != DateTime.MaxValue)
-                    list.Add(new DateSpan(_content[_content.Count - 1].End, DateTime.MaxValue));
+                    list.Add(new DateRange(_content[_content.Count - 1].End, DateTime.MaxValue));
             }
             else
             {
                 // Nothing to reverse, hence creating a datespan ranging all possible dates.
-                list.Add(new DateSpan(DateTime.MinValue, DateTime.MaxValue));
+                list.Add(new DateRange(DateTime.MinValue, DateTime.MaxValue));
             }
-            return new DateSpanCollection(list);
+            return new DateRangeCollection(list);
         }
+
+        #endregion
+
+        #region [ -- Overloaded operators -- ]
+
+        public static DateRangeCollection operator | (DateRangeCollection lhs, DateRangeCollection rhs)
+        {
+            return lhs.Union(rhs);
+        }
+
+        public static DateRangeCollection operator & (DateRangeCollection lhs, DateRangeCollection rhs)
+        {
+            return lhs.Intersection(rhs);
+        }
+
+        public static DateRangeCollection operator ! (DateRangeCollection self)
+        {
+            return self.Inverse();
+        }
+
+        #endregion
 
         #region [ -- Interface implementation -- ]
 
-        public IEnumerator<DateSpan> GetEnumerator()
+        public IEnumerator<DateRange> GetEnumerator()
         {
             return _content.GetEnumerator();
         }
@@ -163,12 +186,12 @@ namespace Cronos
 
         #region [ -- Private helper methods -- ]
 
-        static void Sort(List<DateSpan> list)
+        static void Sort(List<DateRange> list)
         {
             list.Sort((lhs, rhs) => lhs.CompareTo(rhs));
         }
 
-        static List<DateSpan> Normalize(List<DateSpan> list)
+        static List<DateRange> Normalize(List<DateRange> list)
         {
             /*
              * Sorting first to simplify logic further down.
@@ -180,7 +203,7 @@ namespace Cronos
             Sort(list);
 
             // Return value.
-            var result = new List<DateSpan>();
+            var result = new List<DateRange>();
 
             /*
              * Inner iterator, the one we're comparing the outer with.
