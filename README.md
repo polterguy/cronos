@@ -31,8 +31,8 @@ the missing `GetCalendar` method.
 
 ```csharp
 /*
- * If you implement these methods, the code below
- * will actually work!
+ * Retrieves Alice's and Bob's calendar (somehow).
+ * Implement GetCalendar yourself, any ways you see fit.
  */
 DateRangeCollection alice = GetCalendar("Alice");
 DateRangeCollection bob = GetCalendar("Bob");
