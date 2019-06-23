@@ -49,6 +49,11 @@ DateRangeCollection bob = GetCalendar("Bob");
 DateRangeCollection availability = !(alice | bob);
 
 /*
+ * Calculates when both Alice and Bob are busy.
+ */
+DateRangeCollection bothBusy = alice & bob;
+
+/*
  * The following finds the first opening in the above dataset
  * that is larger or equal to 2 hours.
  *
