@@ -365,6 +365,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now.AddHours(5), now.AddHours(7));
             Assert.True(sp1 < sp2);
+            Assert.False(sp2 < sp1);
         }
 
         [Fact]
@@ -374,6 +375,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now.AddHours(-5), now.AddHours(-2));
             Assert.False(sp1 < sp2);
+            Assert.True(sp2 < sp1);
         }
 
         [Fact]
@@ -392,6 +394,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(2));
             Assert.False(sp1 < sp2);
+            Assert.True(sp2 < sp1);
         }
 
         [Fact]
@@ -401,6 +404,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(5));
             Assert.True(sp1 < sp2);
+            Assert.False(sp2 < sp1);
         }
 
         [Fact]
@@ -410,6 +414,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now.AddHours(3), now.AddHours(5));
             var sp2 = new DateSpan(now.AddHours(1), now.AddHours(2));
             Assert.True(sp1 > sp2);
+            Assert.False(sp2 > sp1);
         }
 
         [Fact]
@@ -419,6 +424,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now.AddHours(2), now.AddHours(3));
             var sp2 = new DateSpan(now.AddHours(4), now.AddHours(6));
             Assert.False(sp1 > sp2);
+            Assert.True(sp2 > sp1);
         }
 
         [Fact]
@@ -437,6 +443,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(2));
             var sp2 = new DateSpan(now, now.AddHours(3));
             Assert.False(sp1 > sp2);
+            Assert.True(sp2 > sp1);
         }
 
         [Fact]
@@ -446,6 +453,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(5));
             var sp2 = new DateSpan(now, now.AddHours(3));
             Assert.True(sp1 > sp2);
+            Assert.False(sp2 > sp1);
         }
 
         [Fact]
@@ -474,6 +482,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(2));
             Assert.False(sp1 <= sp2);
+            Assert.True(sp2 <= sp1);
         }
 
         [Fact]
@@ -483,6 +492,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(5));
             Assert.True(sp1 <= sp2);
+            Assert.False(sp2 <= sp1);
         }
 
         [Fact]
@@ -511,6 +521,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(2));
             Assert.True(sp1 >= sp2);
+            Assert.False(sp2 >= sp1);
         }
 
         [Fact]
@@ -520,6 +531,7 @@ namespace CronosTests
             var sp1 = new DateSpan(now, now.AddHours(3));
             var sp2 = new DateSpan(now, now.AddHours(5));
             Assert.False(sp1 >= sp2);
+            Assert.True(sp2 >= sp1);
         }
     }
 }
