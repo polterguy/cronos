@@ -85,7 +85,7 @@ namespace Cronos
 
         static void Sort(List<DateSpan> list)
         {
-            list.Sort((lhs, rhs) => lhs.Start.CompareTo(rhs.Start));
+            list.Sort((lhs, rhs) => lhs.CompareTo(rhs));
         }
 
         static List<DateSpan> Normalize(List<DateSpan> list)
