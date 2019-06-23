@@ -54,6 +54,11 @@ DateRangeCollection availability = !(alice | bob);
 DateRangeCollection bothBusy = alice & bob;
 
 /*
+ * Calculates how many hours both Alice and Bob are busy.
+ */
+TimeSpan bothBusyHours = bothBusy.Size;
+
+/*
  * The following finds the first opening in the above dataset
  * that is larger or equal to 2 hours.
  *
