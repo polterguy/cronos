@@ -18,6 +18,8 @@ namespace Cronos
 
         public DateTime End { get; }
 
+        public TimeSpan Size { get { return End - Start; } }
+
         public bool Intersects(DateSpan rhs)
         {
             return rhs.Start < End && rhs.End > Start;
@@ -25,13 +27,13 @@ namespace Cronos
 
         public bool Adjacent(DateSpan rhs)
         {
-            return !Intersects(rhs) && (rhs.Start == End || rhs.End == Start);
+            return rhs.Start == End || rhs.End == Start;
         }
 
         public DateSpan Union(DateSpan rhs)
         {
             if (!Intersects(rhs) && !Adjacent(rhs))
-                throw new ArgumentOutOfRangeException($"{nameof(rhs)} must intersect with date");
+                throw new ArgumentOutOfRangeException($"{nameof(rhs)} must be adjacent or intersect with the current instance");
 
             return new DateSpan(Start < rhs.Start ? Start : rhs.Start, End > rhs.End ? End : rhs.End);
         }

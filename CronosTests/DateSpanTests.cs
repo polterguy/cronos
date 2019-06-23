@@ -24,6 +24,14 @@ namespace CronosTests
         }
 
         [Fact]
+        public void Size()
+        {
+            var now = DateTime.Now;
+            var sp = new DateSpan(now.AddHours(2), now.AddHours(5));
+            Assert.Equal(new TimeSpan(3,0,0), sp.Size);
+        }
+
+        [Fact]
         public void Intersects_01()
         {
             var now = DateTime.Now;
