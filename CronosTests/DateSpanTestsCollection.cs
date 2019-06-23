@@ -248,6 +248,26 @@ namespace CronosTests
         }
 
         [Fact]
+        public void Intersection_07()
+        {
+            var now = DateTime.Now;
+            var c1 = new DateSpanCollection(
+                new DateSpan(now.AddMinutes(1), now.AddMinutes(10)));
+            var c2 = new DateSpanCollection(
+                new DateSpan(now.AddMinutes(2), now.AddMinutes(3)),
+                new DateSpan(now.AddMinutes(4), now.AddMinutes(5)),
+                new DateSpan(now.AddMinutes(6), now.AddMinutes(7)));
+            var result = c2.Intersection(c1);
+            Assert.Equal(3, result.Count);
+            Assert.Equal(now.AddMinutes(2), result[0].Start);
+            Assert.Equal(now.AddMinutes(3), result[0].End);
+            Assert.Equal(now.AddMinutes(4), result[1].Start);
+            Assert.Equal(now.AddMinutes(5), result[1].End);
+            Assert.Equal(now.AddMinutes(6), result[2].Start);
+            Assert.Equal(now.AddMinutes(7), result[2].End);
+        }
+
+        [Fact]
         public void Inverse_02()
         {
             var now = DateTime.Now;

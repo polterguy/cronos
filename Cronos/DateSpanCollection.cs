@@ -115,24 +115,34 @@ namespace Cronos
             return new DateSpanCollection(list);
         }
 
-        public DateSpanCollection Inverse()
+        public DateSpanCollection Inverse(bool edgeValues = true)
         {
+            // Buffer to hold our result.
             var list = new List<DateSpan>();
+
+            // Making sure we actually have anything to inverse here.
             if (_content.Count > 0)
             {
-                if (_content[0].Start != DateTime.MinValue)
+                // Adding "start edge value" if we should
+                if (edgeValues && _content[0].Start != DateTime.MinValue)
                     list.Add(new DateSpan(DateTime.MinValue, _content[0].Start));
-                int next = 1;
+
+                // Used to figure out the next item in our list.
+                int next = 0;
                 foreach (var idx in _content)
                 {
-                    if (_content.Count > next)
-                    {
+                    if (_content.Count > ++next)
                         list.Add(new DateSpan(idx.End, _content[next].Start));
-                        next += 1;
-                    }
                 }
-                if (_content.Last().End != DateTime.MaxValue)
-                    list.Add(new DateSpan(_content.Last().End, DateTime.MaxValue));
+
+                // Adding "end edge value" if we should
+                if (_content[_content.Count - 1].End != DateTime.MaxValue)
+                    list.Add(new DateSpan(_content[_content.Count - 1].End, DateTime.MaxValue));
+            }
+            else
+            {
+                // Nothing to reverse, hence creating a datespan ranging all possible dates.
+                list.Add(new DateSpan(DateTime.MinValue, DateTime.MaxValue));
             }
             return new DateSpanCollection(list);
         }
@@ -151,7 +161,7 @@ namespace Cronos
 
         #endregion
 
-        #region [ -- Static private helper methods -- ]
+        #region [ -- Private helper methods -- ]
 
         static void Sort(List<DateSpan> list)
         {
