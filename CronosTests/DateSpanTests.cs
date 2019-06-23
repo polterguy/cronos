@@ -514,7 +514,7 @@ namespace CronosTests
         }
 
         [Fact]
-        public void Operator_Mt_eq_04()
+        public void Operator_mt_eq_04()
         {
             var now = DateTime.Now;
             var sp1 = new DateSpan(now, now.AddHours(3));
