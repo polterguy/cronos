@@ -20,13 +20,14 @@ The above 3 operations happens to be the equivalent of the following logical ope
 
 Using these three algebraic operations, you can easily answer questions such as the following
 
-* _"When is both Bob and Alice busy"_ - AND/Intersection of Alice and Bob's calendar activities
-* _"When is neither of Alice and Boby at work"_ - Inverse of the union of Alice and Bob's calendar activities
+* _"When is both Bob and Alice busy?"_ - AND/INTERSECTION of Alice's and Bob's calendar activities
+* _"When is either Alice or Bob at work?"_ - OR/UNION of Alice's and Bob's calendar activities
+* _"When is neither of Alice and Boby at work?"_ - NOT/INVERSE of the UNION of Alice's and Bob's calendar activities
 * Etc ...
 
-This makes calculus with date ranges fairly simple, and makes your code for doing such
+This makes calculus with dates and calendars fairly simple, and makes your code for doing such
 calculations easily understood. Below is an example of working code, assuming you implement
-the missing methods.
+the missing `GetCalendar` method.
 
 ```csharp
 /*
