@@ -25,7 +25,37 @@ Using these three algebraic operations, you can easily answer questions such as 
 * Etc ...
 
 This makes calculus with date ranges fairly simple, and makes your code for doing such
-calculations easily understood.
+calculations easily understood. Below is an example of working code, assuming you implement
+the missing methods.
+
+```csharp
+/*
+ * If you implement these methods, the code below
+ * will actually work!
+ */
+DateRangeCollection alice = GetCalendar("Alice");
+DateRangeCollection bob = GetCalendar("Bob");
+
+/*
+ * Calculates availability for both Alice and Bob, based
+ * upon their existing calendar activities.
+ *
+ * This first creates a UNION of Alice and Bob's
+ * calendar activities, for then to INVERSE that result.
+ * The results is a DateRangeCollection of when both Alice
+ * and Bob are available for a meeting.
+ */
+DateRangeCollection availability = !(alice | bob);
+
+/*
+ * The following finds the first opening in the above dataset
+ * that is larger or equal to 2 hours.
+ *
+ * This code assumes you include System.Linq in your C# code file.
+ */
+DateRange availableForMeeting = availability.FirstOrDefault(x => x.Size >= new TimeSpan(2,0,0));
+
+```
 
 **Disclaimer** - Cronos is in alpha version at the moment, and not production ready. But if
 you'd like to play around with it, you can clone its repository.
