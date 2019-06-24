@@ -73,7 +73,7 @@ multiple threads.
 **Notice** - When you create an instance of a `DateRangeCollection`, its items are
 _"normalized"_, which implies creating a UNION out of its values. This implies that
 even though you add 5 items for instance, if two of these items are overlapping each
-other, the resulting DateRangeCollection will only contain 4 items.
+other, the resulting DateRangeCollection will contain only 4 items.
 
 ## DateRange methods and properties
 
