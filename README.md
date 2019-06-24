@@ -8,15 +8,9 @@ Simply create a union of the times you are busy, Alice is busy, and Bob is busy.
 inverse this date range, and you're left with all possible date ranges when all 3 of
 you are available for a meeting. Cronos supports the following date range operations.
 
-* Union
-* Intersections
-* Inversion
-
-The above 3 operations happens to be the equivalent of the following logical operations.
-
-* OR
-* AND
-* NOT
+* Union - OR
+* Intersections - AND
+* Inversion - NOT
 
 Using these three algebraic operations, you can easily answer questions such as the following
 
