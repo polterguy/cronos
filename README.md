@@ -62,5 +62,20 @@ DateRange availableForMeeting = availability.FirstOrDefault(x => x.Size >= new T
 
 ```
 
+Cronos contains two main classes.
+
+* __DateRange__ - A start DateTime and an end DateTime, plus helper methods
+* __DateRangeCollections__ - A list of DateRange instances
+
+Using these two methods you can perform algebraic operations on calendar items to answer
+any questions such as the above. Both classes are immutable, and hence also thread safe,
+since an instance can never be modified. So each instance can be safely shared among
+multiple threads.
+
+**Notice** - When you create an instance of a `DateRangeCollection`, its items are
+_"normalized"_, which implies creating a UNION out of its values. This implies that
+even though you add 5 items for instance, if two of these items are overlapping each
+other, the resulting DateRangeCollection will only contain 4 items.
+
 **Disclaimer** - Cronos is in alpha version at the moment, and not production ready. But if
 you'd like to play around with it, you can clone its repository.
