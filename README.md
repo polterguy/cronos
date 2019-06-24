@@ -65,7 +65,7 @@ Cronos contains two main classes.
 * __DateRange__ - A start DateTime and an end DateTime, plus helper methods
 * __DateRangeCollections__ - A list of DateRange instances
 
-Using these two methods you can perform algebraic operations on calendar items to answer
+Using these two classes you can perform algebraic operations on calendar items to answer
 any questions such as the above. Both classes are immutable, and hence also thread safe,
 since an instance can never be modified. So each instance can be safely shared among
 multiple threads.
