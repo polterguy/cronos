@@ -77,5 +77,17 @@ _"normalized"_, which implies creating a UNION out of its values. This implies t
 even though you add 5 items for instance, if two of these items are overlapping each
 other, the resulting DateRangeCollection will only contain 4 items.
 
+## DateRange methods and operators
+
+* Start - Start DateTime
+* End - End DateTime
+* Size - Size of instance as a TimeSpan
+* Intersects - Returns true if DateRange intersects with the specified parameter
+* Adjacent - Returns true if DateRange is adjacent to the specified parameter
+* Union - Creates a UNION of the given instance combined with the specified parameter
+* Intersection - Returns the intersection of the given instance combined with the specified parameter
+
+In addition DateRange overloads all relevant operators, such as ==, !=, >, <, >= and <=.
+
 **Disclaimer** - Cronos is in alpha version at the moment, and not production ready. But if
 you'd like to play around with it, you can clone its repository.
