@@ -2,11 +2,12 @@
 # Cronos, algebraic date range operations
 
 Imagine you have 2 employees; Alice and Bob, and you want to schedule a meeting between
-yourself, Alice, and Bob. This creates a problem, which is to figure out what time both
-you, Alice and Bob are available. To answer this question with Cronos is quite simple.
-Simply create a union of the times you are busy, Alice is busy, and Bob is busy. Then
-inverse this date range, and you're left with all possible date ranges when all 3 of
-you are available for a meeting. Cronos supports the following date range operations.
+Alice, and Bob. This creates a problem, which is to figure out what time both Alice and
+Bob are available. To answer this question with Cronos is quite simple. Simply create a
+union of the times Alice is busy, and Bob is busy. Then inverse this date range, and
+you're left with all possible date ranges when both Alice and Bob are available for a
+meeting. Cronos allows you to easily answer questions such as these, with an extremely
+tight syntax. Cronos supports the following date range operations.
 
 * Union - OR
 * Intersections - AND
