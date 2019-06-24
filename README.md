@@ -102,5 +102,4 @@ of intersection, union and inverse. DateRangeCollection also implements IEnumera
 overloads the index operator (get only operations), allowing you to easily combine it with
 LINQ.
 
-**Disclaimer** - Cronos is in alpha version at the moment, and not production ready. But if
-you'd like to play around with it, you can clone its repository.
+**Disclaimer** - Cronos is in alpha version at the moment, and not production ready.
