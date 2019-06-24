@@ -3,8 +3,8 @@
 
 Imagine you have 2 employees; Alice and Bob, and you want to schedule a meeting between
 Alice, and Bob. This creates a problem, which is to figure out what time both Alice and
-Bob are available. To answer this question with Cronos is quite simple. Simply create a
-union of the times Alice is busy, and Bob is busy. Then inverse this date range, and
+Bob are available. To answer this question with Cronos is quite simple; Simply create a
+union of the times Alice is busy, and Bob is busy, then inverse this date range, and
 you're left with all possible date ranges when both Alice and Bob are available for a
 meeting. Cronos allows you to easily answer questions such as these, with an extremely
 tight syntax. This makes Cronos useful for anything related to calendar and date range
@@ -18,13 +18,13 @@ following operations.
 Using these three algebraic operations, you can easily answer questions such as the following
 
 * _"When is both Bob and Alice busy?"_ - AND/INTERSECTION of Alice's and Bob's calendar activities
-* _"When is either Alice or Bob at work?"_ - OR/UNION of Alice's and Bob's calendar activities
-* _"When is neither of Alice and Boby at work?"_ - NOT/INVERSE of the UNION of Alice's and Bob's calendar activities
+* _"When is either Alice or Bob busy?"_ - OR/UNION of Alice's and Bob's calendar activities
+* _"When is neither of Alice and Boby busy?"_ - NOT/INVERSE of the UNION of Alice's and Bob's calendar activities
 * Etc ...
 
-This makes calculus with dates and calendars fairly simple, and makes your code for doing such
-calculations easily understood. Below is an example of working code, assuming you implement
-the missing `GetCalendar` method.
+This makes _"calculus"_ with dates and date ranges fairly simple, and makes your code for
+doing such calculations easily understood. Below is an example of working code, assuming
+you implement the missing `GetCalendar` method.
 
 ```csharp
 /*
