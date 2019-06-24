@@ -37,11 +37,6 @@ DateRangeCollection bob = GetCalendar("Bob");
 /*
  * Calculates availability for both Alice and Bob, based
  * upon their existing calendar activities.
- *
- * This first creates a UNION of Alice and Bob's
- * calendar activities, for then to INVERSE that result.
- * The results is a DateRangeCollection of when both Alice
- * and Bob are available for a meeting.
  */
 DateRangeCollection availability = !(alice | bob);
 
