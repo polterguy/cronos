@@ -7,7 +7,9 @@ Bob are available. To answer this question with Cronos is quite simple. Simply c
 union of the times Alice is busy, and Bob is busy. Then inverse this date range, and
 you're left with all possible date ranges when both Alice and Bob are available for a
 meeting. Cronos allows you to easily answer questions such as these, with an extremely
-tight syntax. Cronos supports the following date range operations.
+tight syntax. This makes Cronos useful for anything related to calendar and date range
+operations, requiring algorithmical operations on said date ranges. Cronos supports the
+following operations.
 
 * Union - OR
 * Intersections - AND
