@@ -77,7 +77,7 @@ _"normalized"_, which implies creating a UNION out of its values. This implies t
 even though you add 5 items for instance, if two of these items are overlapping each
 other, the resulting DateRangeCollection will only contain 4 items.
 
-## DateRange methods and operators
+## DateRange methods and properties
 
 * Start - Start DateTime
 * End - End DateTime
@@ -88,6 +88,21 @@ other, the resulting DateRangeCollection will only contain 4 items.
 * Intersection - Returns the intersection of the given instance combined with the specified parameter
 
 In addition DateRange overloads all relevant operators, such as ==, !=, >, <, >= and <=.
+DateRange also implements the & and | operators, which are the equivalent of AND/intersections,
+and OR/union.
+
+## DateRangeCollection methods and properties
+
+* Count - Returns the number of items
+* Size - Returns the size of all DateRange instances
+* Union - Returns the union result of the given instance with the specified parameter
+* Intersection - Returns the intersection result of the given instance with the specified parameter
+* Inverse - Inverses the current collection and returns the results to caller
+
+In addition, `DateRangeCollection` overloads the &, | and ! operators, being the equivalent
+of intersection, union and inverse. DateRangeCollection also implements IEnumerable, and
+overloads the index operator (get only operations), allowing you to easily combine it with
+LINQ.
 
 **Disclaimer** - Cronos is in alpha version at the moment, and not production ready. But if
 you'd like to play around with it, you can clone its repository.
